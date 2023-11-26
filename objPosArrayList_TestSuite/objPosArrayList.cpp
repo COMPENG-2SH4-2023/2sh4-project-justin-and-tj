@@ -1,54 +1,98 @@
 #include "objPosArrayList.h"
+#include <stdexcept>
 
-// Check lecture contents on general purpose array list construction, 
+// Check lecture contents on general purpose array list construction,
 // and modify it to support objPos array list construction.
 
 objPosArrayList::objPosArrayList()
 {
-
+    aList = new objPos[ARRAY_MAX_CAP];
+    sizeList = 0;
+    sizeArray = 5;
 }
 
 objPosArrayList::~objPosArrayList()
 {
+    delete[] aList;
+}
 
+void objPosArrayList::increaseSizeArray()
+{
+    if (sizeArray + ARRAY_UNIT_SIZE <= ARRAY_MAX_CAP)
+    {
+        objPos *newList = new objPos[sizeArray + ARRAY_UNIT_SIZE];
+        sizeArray += ARRAY_UNIT_SIZE;
+
+        for (int i = 0; i < sizeList; i++)
+            newList[i] = aList[i];
+
+        delete[] aList;
+
+        aList = newList;
+    }
+    else
+    {
+        throw std::overflow_error("ArrayList is too large to store");
+    }
 }
 
 int objPosArrayList::getSize()
 {
-
+    return sizeList;
 }
 
 void objPosArrayList::insertHead(objPos thisPos)
 {
+    if (sizeList + 1 >= sizeArray)
+    {
+        increaseSizeArray();
+    }
 
+    for (int i = 0; i < sizeList; i++)
+    {
+        aList[i + 1] = aList[i];
+    }
+
+    sizeList++;
+    aList[0] = thisPos;
 }
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    if (sizeList + 1 >= sizeArray)
+    {
+        increaseSizeArray();
+    }
 
+    aList[sizeList] = thisPos;
+    sizeList++;
 }
 
 void objPosArrayList::removeHead()
 {
-    
+    sizeList -= 1;
+    for (int i = 1; i < sizeList; i++)
+    {
+        aList[i - 1] = aList[i];
+    }
 }
 
 void objPosArrayList::removeTail()
 {
-
+    sizeList -= 1;
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
 {
-
+    returnPos = aList[0];
 }
 
 void objPosArrayList::getTailElement(objPos &returnPos)
 {
-
+    returnPos = aList[sizeList - 1];
 }
 
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
-
+    returnPos = aList[index];
 }
