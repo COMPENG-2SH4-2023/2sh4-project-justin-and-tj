@@ -1,4 +1,5 @@
 #include "objPos.h"
+#include <string>
 
 objPos::objPos()
 {
@@ -56,4 +57,12 @@ char objPos::getSymbolIfPosEqual(const objPos *refPos)
         return getSymbol();
     else
         return 0;
+}
+
+std::string objPos::toString()
+{
+    std::string output = "x: " + std::to_string(x) + "\n" +
+                         "y : " + std::to_string(y) + "\n" +
+                         "symbol : " + symbol;
+    return output;
 }

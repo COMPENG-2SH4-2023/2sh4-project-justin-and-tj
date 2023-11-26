@@ -1,6 +1,6 @@
 #ifndef OBJPOS_H
 #define OBJPOS_H
-
+#include <string>
 class objPos
 {
 public:
@@ -20,6 +20,8 @@ public:
     bool isPosEqual(const objPos *refPos);
 
     char getSymbolIfPosEqual(const objPos *refPos);
+
+    std::string toString();
 };
 
 #endif
