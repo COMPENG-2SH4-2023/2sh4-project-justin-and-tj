@@ -34,7 +34,7 @@ void Player::updatePlayerDir()
     {
         myDir = RIGHT;
     }
-    else if (mainGameMechsRef->getInput() == 'a'  && myDir != RIGHT)
+    else if (mainGameMechsRef->getInput() == 'a' && myDir != RIGHT)
     {
         myDir = LEFT;
     }
