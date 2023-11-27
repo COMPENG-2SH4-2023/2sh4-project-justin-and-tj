@@ -6,7 +6,6 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
-#include "Player.h"
 
 using namespace std;
 
@@ -39,7 +38,7 @@ public:
     int getBoardSizeX();
     int getBoardSizeY();
 
-    objPosArrayList generateFood(Player *player);
+    void generateFood(objPosArrayList *FoodPositions, objPosArrayList PlayerPositions, int foodCount);
 };
 
 #endif
