@@ -52,33 +52,29 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
-    string total;
+    MacUILib_clearScreen();
 
+    string total;
     for (int j = 0; j < Board1.getBoardSizeY(); j++)
     {
-        for (int i = 0; i < Board1.getBoardSizeX() + 2; i++)
+        for (int i = 0; i < Board1.getBoardSizeX() + 1; i++)
         {
-            if ( j == 0 || j == Board1.getBoardSizeY() - 1)
-            {
-                total += "#";
-            }
-            else if (i == 0 || i == Board1.getBoardSizeX() - 1)
-            {
-                total += "#";
-            }
-            else if (i == Board1.getBoardSizeX() + 1)
+            if (i == Board1.getBoardSizeX())
             {
                 total += "\n";
+            }
+            else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
+                     i == 0 || i == Board1.getBoardSizeX() - 1)
+            {
+                total += "#";
             }
             else
             {
                 total += " ";
             }
         }
-        
     }
-    cout << total << endl;
-    MacUILib_clearScreen();
+    cout << total;
 }
 
 void LoopDelay(void)
