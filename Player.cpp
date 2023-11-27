@@ -26,6 +26,22 @@ void Player::getPlayerPos(objPos &returnPos)
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
+    if (mainGameMechsRef->getInput() == 'w' && myDir != DOWN)
+    {
+        myDir = UP;
+    }
+    else if (mainGameMechsRef->getInput() == 'd' && myDir != LEFT)
+    {
+        myDir = RIGHT;
+    }
+    else if (mainGameMechsRef->getInput() == 'a'  && myDir != RIGHT)
+    {
+        myDir = LEFT;
+    }
+    else if (mainGameMechsRef->getInput() == 's' && myDir != UP)
+    {
+        myDir = DOWN;
+    }
 }
 
 void Player::movePlayer()
