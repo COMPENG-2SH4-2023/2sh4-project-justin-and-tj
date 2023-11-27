@@ -2,13 +2,16 @@
 #include "MacUILib.h"
 #include "objPos.h"
 #include "GameMechs.h"
+#include "Player.h"
 
 using namespace std;
 
 #define DELAY_CONST 100000
+#define FOOD_LENGTH 1
+#define WIN_LENGTH 4
 
-bool exitFlag;
 GameMechs Board1;
+Player player = Player(&Board1);
 
 void Initialize(void);
 void GetInput(void);
@@ -22,7 +25,7 @@ int main(void)
 
     Initialize();
 
-    while (exitFlag == false)
+    while (Board1.getExitFlagStatus() == false)
     {
         GetInput();
         RunLogic();
@@ -39,7 +42,6 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     Board1 = GameMechs(20, 10);
-    exitFlag = false;
 }
 
 void GetInput(void)
@@ -52,7 +54,8 @@ void GetInput(void)
         {
             Board1.setInput(cmd);
         }
-        else{
+        else
+        {
             Board1.setInput(0);
         }
     }
@@ -60,6 +63,8 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    player.updatePlayerDir();
+    player.movePlayer();
 }
 
 void DrawScreen(void)
@@ -75,6 +80,12 @@ void DrawScreen(void)
             {
                 total += "\n";
             }
+            else if (player.isPlayerPos(i, j))
+            {
+                objPos currentPos;
+                player.getPlayerHeadPos(currentPos);
+                total += currentPos.symbol;
+            }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
                      i == 0 || i == Board1.getBoardSizeX() - 1)
             {
@@ -87,6 +98,16 @@ void DrawScreen(void)
         }
     }
     cout << total;
+
+    objPos playerHeadPos;
+    player.getPlayerHeadPos(playerHeadPos);
+
+    string debug = "";
+    debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";
+    debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
+    debug += "Input: ";
+
+    cout << debug << Board1.getInput() << endl;
 }
 
 void LoopDelay(void)
