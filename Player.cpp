@@ -17,10 +17,15 @@ Player::~Player()
     delete[] playerPos;
 }
 
-void Player::getPlayerPos(objPosArrayList *returnPos)
+void Player::getPlayerPos(objPosArrayList &returnPos)
 {
     // return the reference to the playerPos array list
-    returnPos = playerPos;
+    for (int i = 0; i < playerPos->getSize(); i++)
+    {
+        objPos currentEl;
+        playerPos->getElement(currentEl, i);
+        returnPos.insertHead(currentEl);
+    }
 }
 
 void Player::getPlayerHeadPos(objPos &returnPos)

@@ -26,7 +26,7 @@ public:
     Player(GameMechs *thisGMRef);
     ~Player();
 
-    void getPlayerPos(objPosArrayList *returnPos); // Upgrade this in iteration 3.
+    void getPlayerPos(objPosArrayList &returnPos); // Upgrade this in iteration 3.
     void getPlayerHeadPos(objPos &returnPos);
     bool isPlayerPos(int x, int y);
     int getDirection();
