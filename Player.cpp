@@ -68,6 +68,10 @@ void Player::updatePlayerDir()
     {
         myDir = DOWN;
     }
+    else if (cmd == 32)
+    {
+        mainGameMechsRef->setExitTrue();
+    }
 }
 
 void Player::movePlayer()

@@ -89,7 +89,7 @@ void DrawScreen(void)
             }
             else if (foodPositions.isElement({i, j, FOOD_CHAR}))
             {
-                total += '$';
+                total += FOOD_CHAR;
             }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
                      i == 0 || i == Board1.getBoardSizeX() - 1)
@@ -112,7 +112,7 @@ void DrawScreen(void)
     debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
     for (int i = 0; i < foodPositions.getSize(); i++)
     {
-        debug += "FOOD #" + to_string(i) + "\n";
+        debug += "FOOD #" + to_string(i + 1) + " \n";
     }
     debug += "Input: ";
 
