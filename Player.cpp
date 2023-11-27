@@ -7,7 +7,7 @@ Player::Player(GameMechs *thisGMRef)
     myDir = STOP;
     playerPos = new objPosArrayList();
 
-    playerPos->insertHead(objPos(1, 1, '@'));
+    playerPos->insertHead({1, 1, '@'});
     // more actions to be included
 }
 
@@ -30,35 +30,29 @@ void Player::updatePlayerDir()
 
 void Player::movePlayer()
 {
+    objPos currentPos;
+    getPlayerPos(currentPos);
     // PPA3 Finite State Machine logic
     switch (myDir)
     {
     case STOP:
         break;
     case UP:
-        objPos currentPos;
-        playerPos->getHeadElement(currentPos);
         currentPos.y -= 1;
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case DOWN:
-        objPos currentPos;
-        playerPos->getHeadElement(currentPos);
         currentPos.y += 1;
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case LEFT:
-        objPos currentPos;
-        playerPos->getHeadElement(currentPos);
         currentPos.x -= 1;
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case RIGHT:
-        objPos currentPos;
-        playerPos->getHeadElement(currentPos);
         currentPos.x += 1;
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
