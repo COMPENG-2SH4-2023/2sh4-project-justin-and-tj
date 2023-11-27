@@ -3,12 +3,8 @@
 #include "objPos.h"
 #include "GameMechs.h"
 #include "Player.h"
-
+#include "Definitions.h"
 using namespace std;
-
-#define DELAY_CONST 100000
-#define FOOD_LENGTH 1
-#define WIN_LENGTH 4
 
 GameMechs Board1;
 Player player = Player(&Board1);
@@ -41,7 +37,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    Board1 = GameMechs(20, 10);
+    Board1 = GameMechs(BOARD_WIDTH, BOARD_HEIGHT);
 }
 
 void GetInput(void)
