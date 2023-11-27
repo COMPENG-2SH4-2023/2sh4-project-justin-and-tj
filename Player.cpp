@@ -6,7 +6,8 @@ Player::Player(GameMechs *thisGMRef)
     mainGameMechsRef = thisGMRef;
     myDir = STOP;
     playerPos = new objPosArrayList();
-    playerPos->insertHead({1, 1, '@'});
+
+    playerPos->insertHead(objPos(1, 1, '@'));
     // more actions to be included
 }
 
