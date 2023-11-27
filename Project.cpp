@@ -8,6 +8,7 @@ using namespace std;
 
 GameMechs Board1;
 Player player = Player(&Board1);
+objPosArrayList foodPositions;
 
 void Initialize(void);
 void GetInput(void);
@@ -38,6 +39,10 @@ void Initialize(void)
     MacUILib_clearScreen();
 
     Board1 = GameMechs(BOARD_WIDTH, BOARD_HEIGHT);
+
+    objPosArrayList playerPositions;
+    player.getPlayerPos(&playerPositions);
+    Board1.generateFood(&foodPositions, playerPositions, 1);
 }
 
 void GetInput(void)
@@ -82,6 +87,10 @@ void DrawScreen(void)
                 player.getPlayerHeadPos(currentPos);
                 total += currentPos.symbol;
             }
+            else if (foodPositions.isElement({i, j, FOOD_CHAR}))
+            {
+                total += '$';
+            }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
                      i == 0 || i == Board1.getBoardSizeX() - 1)
             {
@@ -101,6 +110,10 @@ void DrawScreen(void)
     string debug = "";
     debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";
     debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
+    for (int i = 0; i < foodPositions.getSize(); i++)
+    {
+        debug += "FOOD #" + to_string(i) + "\n";
+    }
     debug += "Input: ";
 
     cout << debug << Board1.getInput() << endl;

@@ -2,6 +2,11 @@
 #include "Definitions.h"
 #include "Player.h"
 #include "objPosArrayList.h"
+#include <iostream>
+#include <string>
+
+void Random(objPosArrayList *ReturnArray, int CheckArray[][BOARD_HEIGHT], int min1, int max1, int min2, int max2);
+
 GameMechs::GameMechs()
 {
     input = 0;
@@ -55,7 +60,7 @@ void GameMechs::clearInput()
     input = 0;
 }
 
-objPosArrayList GameMechs::generateFood(Player *player)
+void GameMechs::generateFood(objPosArrayList *FoodPositions, objPosArrayList PlayerPositions, int foodCount)
 {
     int RandomNum;
     int CheckArray[BOARD_WIDTH][BOARD_HEIGHT];
@@ -63,40 +68,43 @@ objPosArrayList GameMechs::generateFood(Player *player)
     {
         for (int i = 0; i < getBoardSizeX(); i++)
         {
-            if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
-                i == 0 || i == Board1.getBoardSizeX() - 1)
+            if (j == 0 || j == getBoardSizeY() - 1 ||
+                i == 0 || i == getBoardSizeX() - 1)
             {
                 CheckArray[i][j] = 1;
             }
         }
     }
 
-    objPosArrayList PlayerPositions;
-    player->getPlayerPos(PlayerPositions);
-    PlayerPositions.getSize();
-
     for (int w = 0; w < PlayerPositions.getSize(); w++)
     {
         objPos playerPos;
         PlayerPositions.getElement(playerPos, w);
-        CheckArray[PlayerPos.x][PlayerPos.y] = 1;
+        CheckArray[playerPos.x][playerPos.y]++;
     }
 
-    objPosArrayList FoodPositions;
+    for (int i = 0; i < FoodPositions->getSize(); i++)
+    {
+        FoodPositions->removeTail();
+    }
+    for (int i = 0; i < foodCount; i++)
+    {
+        Random(FoodPositions, CheckArray, 1, BOARD_WIDTH - 2, 1, BOARD_HEIGHT - 2);
+    }
 }
 
-void Random(objPosArrayList ReturnArray, int CheckArray[][BOARD_HEIGHT], int min, int max)
+void Random(objPosArrayList *ReturnArray, int CheckArray[][BOARD_HEIGHT], int min1, int max1, int min2, int max2)
 {
-    int num1 = (rand() % (max - min - 1)) + min;
-    int num2 = (rand() % (max - min - 1)) + min;
+    int num1 = (rand() % (max1 - min1 - 1)) + min1;
+    int num2 = (rand() % (max2 - min2 - 1)) + min2;
 
     if (CheckArray[num1][num2] == 1)
     {
-        Random(ReturnArray, CheckArray, min, max);
+        return Random(ReturnArray, CheckArray, min1, max1, min2, max2);
     }
     else
     {
         CheckArray[num1][num2]++;
-        ReturnArray.insertHead({num1, num2, FOOD_CHAR});
+        ReturnArray->insertHead({num1, num2, FOOD_CHAR});
     }
 }
