@@ -8,7 +8,7 @@ objPosArrayList::objPosArrayList()
 {
     aList = new objPos[ARRAY_MAX_CAP];
     sizeList = 0;
-    sizeArray = 5;
+    sizeArray = ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
@@ -48,7 +48,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         increaseSizeArray();
     }
 
-    for (int i = 0; i < sizeList; i++)
+    for (int i = sizeList - 2; i >= 0; i--)
     {
         aList[i + 1] = aList[i];
     }
@@ -79,7 +79,7 @@ void objPosArrayList::removeHead()
 
 void objPosArrayList::removeTail()
 {
-    sizeList -= 1;
+    sizeList--;
 }
 
 void objPosArrayList::getHeadElement(objPos &returnPos)
@@ -100,7 +100,7 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
 bool objPosArrayList::isElement(objPos input)
 {
     bool isInArrayList = 0;
-    for (int i = 0; i < getSize(); i++)
+    for (int i = 0; i < sizeList; i++)
     {
         objPos test;
         getElement(test, i);
