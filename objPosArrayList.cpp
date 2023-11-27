@@ -98,6 +98,21 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
     returnPos = aList[index];
 }
 
+bool objPosArrayList::isElement(objPos input)
+{
+    bool isInArrayList = 0;
+    for (int i = 0; i < sizeList; i++)
+    {
+        objPos test;
+        getElement(test, i);
+        if (input.isPosEqual(&test))
+        {
+            isInArrayList = 1;
+        }
+    }
+    return isInArrayList;
+}
+
 std::string objPosArrayList::toString()
 {
     std::string output = "";
