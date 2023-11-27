@@ -25,6 +25,7 @@ bool GameMechs::getExitFlagStatus()
 
 char GameMechs::getInput()
 {
+    return input;
 }
 
 int GameMechs::getBoardSizeX()

@@ -44,6 +44,18 @@ void Initialize(void)
 
 void GetInput(void)
 {
+    char cmd;
+    if (MacUILib_hasChar())
+    {
+        cmd = MacUILib_getChar();
+        if (cmd >= 32 && cmd <= 126)
+        {
+            Board1.setInput(cmd);
+        }
+        else{
+            Board1.setInput(0);
+        }
+    }
 }
 
 void RunLogic(void)
