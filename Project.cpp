@@ -7,6 +7,8 @@
 using namespace std;
 
 #define DELAY_CONST 100000
+#define FOOD_LENGTH 1
+#define WIN_LENGTH 4
 
 GameMechs Board1;
 Player player = Player(&Board1);
@@ -81,7 +83,7 @@ void DrawScreen(void)
             else if (player.isPlayerPos(i, j))
             {
                 objPos currentPos;
-                player.getPlayerPos(currentPos);
+                player.getPlayerHeadPos(currentPos);
                 total += currentPos.symbol;
             }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
@@ -98,7 +100,7 @@ void DrawScreen(void)
     cout << total;
 
     objPos playerHeadPos;
-    player.getPlayerPos(playerHeadPos);
+    player.getPlayerHeadPos(playerHeadPos);
 
     string debug = "";
     debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";

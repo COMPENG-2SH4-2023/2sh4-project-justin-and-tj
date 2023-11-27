@@ -6,9 +6,9 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Player.h"
 
 using namespace std;
-
 
 class GameMechs
 {
@@ -18,28 +18,28 @@ class GameMechs
 
     // You will include more data members and member functions to complete your design.
 
-    private:
-        char input;
-        bool exitFlag;
-        
-        int boardSizeX;
-        int boardSizeY;
+private:
+    char input;
+    bool exitFlag;
 
-    public:
-        GameMechs();
-        GameMechs(int boardX, int boardY);
-        
-        bool getExitFlagStatus();
-        void setExitTrue();
+    int boardSizeX;
+    int boardSizeY;
 
-        char getInput();
-        void setInput(char this_input);
-        void clearInput();
+public:
+    GameMechs();
+    GameMechs(int boardX, int boardY);
 
-        int getBoardSizeX();
-        int getBoardSizeY();
-      
+    bool getExitFlagStatus();
+    void setExitTrue();
 
+    char getInput();
+    void setInput(char this_input);
+    void clearInput();
+
+    int getBoardSizeX();
+    int getBoardSizeY();
+
+    objPosArrayList generateFood(Player *player);
 };
 
 #endif

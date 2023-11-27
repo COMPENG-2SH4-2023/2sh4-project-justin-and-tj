@@ -52,3 +52,7 @@ void GameMechs::clearInput()
 {
     input = 0;
 }
+
+objPosArrayList GameMechs::generateFood(Player *player)
+{
+}

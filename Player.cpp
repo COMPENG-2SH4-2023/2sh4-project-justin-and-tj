@@ -17,9 +17,15 @@ Player::~Player()
     delete[] playerPos;
 }
 
-void Player::getPlayerPos(objPos &returnPos)
+void Player::getPlayerPos(objPosArrayList *returnPos)
 {
     // return the reference to the playerPos array list
+    returnPos = playerPos;
+}
+
+void Player::getPlayerHeadPos(objPos &returnPos)
+{
+    // return the reference to the head of the playerPos array list
     playerPos->getHeadElement(returnPos);
 }
 
@@ -67,7 +73,7 @@ void Player::updatePlayerDir()
 void Player::movePlayer()
 {
     objPos currentPos;
-    getPlayerPos(currentPos);
+    getPlayerHeadPos(currentPos);
     // PPA3 Finite State Machine logic
     int boardX = mainGameMechsRef->getBoardSizeX();
     int boardY = mainGameMechsRef->getBoardSizeY();
