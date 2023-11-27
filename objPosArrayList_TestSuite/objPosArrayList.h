@@ -28,6 +28,7 @@ public:
     void getHeadElement(objPos &returnPos);
     void getTailElement(objPos &returnPos);
     void getElement(objPos &returnPos, int index);
+    std::string toString();
 };
 
 #endif

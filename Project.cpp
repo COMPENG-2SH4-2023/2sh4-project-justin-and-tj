@@ -114,13 +114,13 @@ void DrawScreen(void)
     player.getPlayerPos(&playerPos);
 
     string debug = "";
-    debug += "Player Head \t  " + playerHeadPos.toString();
+    // debug += "Player Head \t  " + playerHeadPos.toString();
+    debug += "Player Length: " + to_string(playerPos.getSize()) + "\n";
     for (int i = 0; i < playerPos.getSize(); i++)
     {
         debug += "Player\t  " + playerHeadPos.toString();
     }
     debug += "Player Direction: " + to_string(player.getDirection()) + "\n";
-    debug += "Player Length: " + to_string(playerPos.getSize()) + "\n";
     debug += "Food Position\t  " + foodPos.toString();
     debug += "Score\t\t  " + to_string(Board1.getScore()) + "\n";
     debug += "Input: ";
