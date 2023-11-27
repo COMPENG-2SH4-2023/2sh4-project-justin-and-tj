@@ -23,22 +23,42 @@ void Player::getPlayerPos(objPos &returnPos)
     playerPos->getHeadElement(returnPos);
 }
 
+bool Player::isPlayerPos(int x, int y)
+{
+    for (int i = 0; i < playerPos->getSize(); i++)
+    {
+        objPos currentPosition;
+        playerPos->getElement(currentPosition, i);
+        if (currentPosition.x == x && currentPosition.y == y)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int Player::getDirection()
+{
+    return myDir;
+}
+
 void Player::updatePlayerDir()
 {
     // PPA3 input processing logic
-    if (mainGameMechsRef->getInput() == 'w' && myDir != DOWN)
+    char cmd = mainGameMechsRef->getInput();
+    if (cmd == 'w' && myDir != DOWN)
     {
         myDir = UP;
     }
-    else if (mainGameMechsRef->getInput() == 'd' && myDir != LEFT)
+    else if (cmd == 'd' && myDir != LEFT)
     {
         myDir = RIGHT;
     }
-    else if (mainGameMechsRef->getInput() == 'a' && myDir != RIGHT)
+    else if (cmd == 'a' && myDir != RIGHT)
     {
         myDir = LEFT;
     }
-    else if (mainGameMechsRef->getInput() == 's' && myDir != UP)
+    else if (cmd == 's' && myDir != UP)
     {
         myDir = DOWN;
     }
@@ -49,27 +69,62 @@ void Player::movePlayer()
     objPos currentPos;
     getPlayerPos(currentPos);
     // PPA3 Finite State Machine logic
+    int boardX = mainGameMechsRef->getBoardSizeX();
+    int boardY = mainGameMechsRef->getBoardSizeY();
     switch (myDir)
     {
     case STOP:
         break;
     case UP:
-        currentPos.y -= 1;
+
+        if (currentPos.y - 1 == 0)
+        {
+            currentPos.y = boardY - 2;
+        }
+        else
+        {
+            currentPos.y -= 1;
+        }
+
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case DOWN:
-        currentPos.y += 1;
+        if (currentPos.y + 1 == boardY - 1)
+        {
+            currentPos.y = 1;
+        }
+        else
+        {
+            currentPos.y += 1;
+        }
+
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case LEFT:
-        currentPos.x -= 1;
+        if (currentPos.x - 1 == 0)
+        {
+            currentPos.x = boardX - 2;
+        }
+        else
+        {
+            currentPos.x -= 1;
+        }
+
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;
     case RIGHT:
-        currentPos.x += 1;
+        if (currentPos.x + 1 == boardX - 1)
+        {
+            currentPos.x = 1;
+        }
+        else
+        {
+            currentPos.x += 1;
+        }
+
         playerPos->insertHead(currentPos);
         playerPos->removeTail();
         break;

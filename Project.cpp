@@ -61,6 +61,8 @@ void GetInput(void)
 
 void RunLogic(void)
 {
+    player.updatePlayerDir();
+    player.movePlayer();
 }
 
 void DrawScreen(void)
@@ -76,6 +78,12 @@ void DrawScreen(void)
             {
                 total += "\n";
             }
+            else if (player.isPlayerPos(i, j))
+            {
+                objPos currentPos;
+                player.getPlayerPos(currentPos);
+                total += currentPos.symbol;
+            }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
                      i == 0 || i == Board1.getBoardSizeX() - 1)
             {
@@ -88,6 +96,16 @@ void DrawScreen(void)
         }
     }
     cout << total;
+
+    objPos playerHeadPos;
+    player.getPlayerPos(playerHeadPos);
+
+    string debug = "";
+    debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";
+    debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
+    debug += "Input: ";
+
+    cout << debug << Board1.getInput() << endl;
 }
 
 void LoopDelay(void)

@@ -27,11 +27,13 @@ public:
     ~Player();
 
     void getPlayerPos(objPos &returnPos); // Upgrade this in iteration 3.
+    bool isPlayerPos(int x, int y);
+    int getDirection();
     void updatePlayerDir();
     void movePlayer();
 
 private:
-    objPosArrayList *playerPos; // Upgrade this in iteration 3.
+    objPosArrayList *playerPos;
     enum Dir myDir;
 
     // Need a reference to the Main Game Mechanisms
