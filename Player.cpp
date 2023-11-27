@@ -85,11 +85,26 @@ void Player::movePlayer()
 
         if (currentPos.y - 1 == 0)
         {
-            currentPos.y = boardY - 2;
+
+            if (playerPos->isElement({currentPos.x, boardY - 2, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.y = boardY - 2;
+            }
         }
         else
         {
-            currentPos.y -= 1;
+            if (playerPos->isElement({currentPos.x, currentPos.y - 1, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.y -= 1;
+            }
         }
 
         playerPos->insertHead(currentPos);
@@ -98,11 +113,25 @@ void Player::movePlayer()
     case DOWN:
         if (currentPos.y + 1 == boardY - 1)
         {
-            currentPos.y = 1;
+            if (playerPos->isElement({currentPos.x, 1, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.y = 1;
+            }
         }
         else
         {
-            currentPos.y += 1;
+            if (playerPos->isElement({currentPos.x, currentPos.y + 1, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.y += 1;
+            }
         }
 
         playerPos->insertHead(currentPos);
@@ -111,11 +140,25 @@ void Player::movePlayer()
     case LEFT:
         if (currentPos.x - 1 == 0)
         {
-            currentPos.x = boardX - 2;
+            if (playerPos->isElement({boardX - 2, currentPos.y, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.x = boardX - 2;
+            }
         }
         else
         {
-            currentPos.x -= 1;
+            if (playerPos->isElement({currentPos.x - 1, currentPos.y, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.x -= 1;
+            }
         }
 
         playerPos->insertHead(currentPos);
@@ -124,11 +167,25 @@ void Player::movePlayer()
     case RIGHT:
         if (currentPos.x + 1 == boardX - 1)
         {
-            currentPos.x = 1;
+            if (playerPos->isElement({1, currentPos.y, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.x = 1;
+            }
         }
         else
         {
-            currentPos.x += 1;
+            if (playerPos->isElement({currentPos.x + 1, currentPos.y, '@'}))
+            {
+                mainGameMechsRef->setExitTrue();
+            }
+            else
+            {
+                currentPos.x += 1;
+            }
         }
 
         playerPos->insertHead(currentPos);
