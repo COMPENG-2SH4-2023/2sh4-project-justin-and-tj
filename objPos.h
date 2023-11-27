@@ -18,6 +18,7 @@ public:
     char getSymbol();
 
     bool isPosEqual(const objPos *refPos);
+    bool isPosEqual(int x1, int y1);
 
     char getSymbolIfPosEqual(const objPos *refPos);
 

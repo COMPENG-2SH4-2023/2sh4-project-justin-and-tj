@@ -29,6 +29,7 @@ public:
     void getTailElement(objPos &returnPos);
     void getElement(objPos &returnPos, int index);
     bool isElement(objPos input);
+    std::string toString();
 };
 
 #endif

@@ -61,8 +61,8 @@ char objPos::getSymbolIfPosEqual(const objPos *refPos)
 
 std::string objPos::toString()
 {
-    std::string output = "x: " + std::to_string(x) + "\n" +
-                         "y : " + std::to_string(y) + "\n" +
+    std::string output = "x: " + std::to_string(x) + "\t" +
+                         "y : " + std::to_string(y) + "\t" +
                          "symbol : " + symbol;
     return output;
 }

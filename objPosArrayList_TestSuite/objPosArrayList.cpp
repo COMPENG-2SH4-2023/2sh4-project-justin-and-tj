@@ -1,5 +1,6 @@
 #include "objPosArrayList.h"
 #include <stdexcept>
+#include <string>
 
 // Check lecture contents on general purpose array list construction,
 // and modify it to support objPos array list construction.
@@ -8,7 +9,7 @@ objPosArrayList::objPosArrayList()
 {
     aList = new objPos[ARRAY_MAX_CAP];
     sizeList = 0;
-    sizeArray = 5;
+    sizeArray = ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
@@ -95,4 +96,15 @@ void objPosArrayList::getTailElement(objPos &returnPos)
 void objPosArrayList::getElement(objPos &returnPos, int index)
 {
     returnPos = aList[index];
+}
+
+std::string objPosArrayList::toString()
+{
+    std::string output = "";
+    output += "Array Length: " + std::to_string(getSize()) + "\n";
+    for (int i = 0; i < getSize(); i++)
+    {
+        output += aList[i].toString() + "\n";
+    }
+    return output;
 }

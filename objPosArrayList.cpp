@@ -1,5 +1,6 @@
 #include "objPosArrayList.h"
 #include <stdexcept>
+#include <string>
 
 // Check lecture contents on general purpose array list construction,
 // and modify it to support objPos array list construction.
@@ -8,7 +9,7 @@ objPosArrayList::objPosArrayList()
 {
     aList = new objPos[ARRAY_MAX_CAP];
     sizeList = 0;
-    sizeArray = 5;
+    sizeArray = ARRAY_MAX_CAP;
 }
 
 objPosArrayList::~objPosArrayList()
@@ -48,7 +49,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         increaseSizeArray();
     }
 
-    for (int i = 0; i < sizeList; i++)
+    for (int i = sizeList - 1; i >= 0; i--)
     {
         aList[i + 1] = aList[i];
     }
@@ -100,7 +101,7 @@ void objPosArrayList::getElement(objPos &returnPos, int index)
 bool objPosArrayList::isElement(objPos input)
 {
     bool isInArrayList = 0;
-    for (int i = 0; i < getSize(); i++)
+    for (int i = 0; i < sizeList; i++)
     {
         objPos test;
         getElement(test, i);
@@ -110,4 +111,15 @@ bool objPosArrayList::isElement(objPos input)
         }
     }
     return isInArrayList;
+}
+
+std::string objPosArrayList::toString()
+{
+    std::string output = "";
+    output += "Array Length: " + std::to_string(getSize()) + "\n";
+    for (int i = 0; i < getSize(); i++)
+    {
+        output += aList[i].toString();
+    }
+    return output;
 }

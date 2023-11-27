@@ -8,7 +8,7 @@ using namespace std;
 
 GameMechs Board1;
 Player player = Player(&Board1);
-objPosArrayList foodPositions;
+string debugMessages = "";
 
 void Initialize(void);
 void GetInput(void);
@@ -38,11 +38,13 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    srand(time(NULL));
+
     Board1 = GameMechs(BOARD_WIDTH, BOARD_HEIGHT);
 
-    objPosArrayList playerPositions;
-    player.getPlayerPos(&playerPositions);
-    Board1.generateFood(&foodPositions, playerPositions, 1);
+    objPosArrayList playerPos;
+    player.getPlayerPos(playerPos);
+    Board1.generateFood(playerPos);
 }
 
 void GetInput(void)
@@ -73,6 +75,9 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     string total;
+
+    objPos foodPos;
+    Board1.getFoodPos(foodPos);
     for (int j = 0; j < Board1.getBoardSizeY(); j++)
     {
         for (int i = 0; i < Board1.getBoardSizeX() + 1; i++)
@@ -87,9 +92,9 @@ void DrawScreen(void)
                 player.getPlayerHeadPos(currentPos);
                 total += currentPos.symbol;
             }
-            else if (foodPositions.isElement({i, j, FOOD_CHAR}))
+            else if (foodPos.isPosEqual(i, j))
             {
-                total += '$';
+                total += FOOD_CHAR;
             }
             else if (j == 0 || j == Board1.getBoardSizeY() - 1 ||
                      i == 0 || i == Board1.getBoardSizeX() - 1)
@@ -102,21 +107,28 @@ void DrawScreen(void)
             }
         }
     }
+    total += "\n****SNAKE GAME****\nBoard Size: " +
+             to_string(Board1.getBoardSizeX()) + " by " + to_string(Board1.getBoardSizeY()) + "\n" +
+             "Score\t\t  " + to_string(Board1.getScore()) + "\n\n" +
+             "****INSTRUCTIONS****\n Use \"W\", \"A\", \"S\", \"D\" to move the snake around.\n" +
+             " Aim for the " + (char)FOOD_CHAR + " to grow your snake longer.\n" +
+             " See how long you can get the snake before you run into yourself!";
     cout << total;
 
-    objPos playerHeadPos;
-    player.getPlayerHeadPos(playerHeadPos);
-
-    string debug = "";
-    debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";
-    debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
-    for (int i = 0; i < foodPositions.getSize(); i++)
+    if (DEBUG_FLAG)
     {
-        debug += "FOOD #" + to_string(i) + "\n";
-    }
-    debug += "Input: ";
+        objPos playerHeadPos;
+        objPosArrayList playerPositions;
+        player.getPlayerHeadPos(playerHeadPos);
+        player.getPlayerPos(playerPositions);
+        string debug = "\n****DEBUG****\n" + debugMessages + "\n";
+        debug += playerPositions.toString();
+        debug += "Player Direction: " + to_string(player.getDirection()) + "\n";
+        debug += "Food Position\t  " + foodPos.toString();
+        debug += "Input: ";
 
-    cout << debug << Board1.getInput() << endl;
+        cout << debug << Board1.getInput() << endl;
+    }
 }
 
 void LoopDelay(void)
@@ -127,6 +139,14 @@ void LoopDelay(void)
 void CleanUp(void)
 {
     MacUILib_clearScreen();
-
+    if (Board1.getWinFlagStatus())
+    {
+        cout << "Your final score was " << to_string(Board1.getScore()) << endl
+             << "on a " << to_string(Board1.getBoardSizeX()) << " by " << to_string(Board1.getBoardSizeY()) << " Game Board" << endl;
+    }
+    else
+    {
+        cout << "Game Interrupted. Come back again soon!" << endl;
+    }
     MacUILib_uninit();
 }

@@ -14,13 +14,20 @@ Player::Player(GameMechs *thisGMRef)
 Player::~Player()
 {
     // delete any heap members here
-    delete[] playerPos;
+    delete playerPos;
 }
 
-void Player::getPlayerPos(objPosArrayList *returnPos)
+void Player::getPlayerPos(objPosArrayList &returnPos)
 {
-    // return the reference to the playerPos array list
-    returnPos = playerPos;
+    for (int i = 0; i < returnPos.getSize(); i++)
+        returnPos.removeHead();
+
+    for (int i = 0; i < playerPos->getSize(); i++)
+    {
+        objPos currentEl;
+        playerPos->getElement(currentEl, i);
+        returnPos.insertHead(currentEl);
+    }
 }
 
 void Player::getPlayerHeadPos(objPos &returnPos)
@@ -68,15 +75,23 @@ void Player::updatePlayerDir()
     {
         myDir = DOWN;
     }
+    else if (cmd == 32)
+    {
+        mainGameMechsRef->setExitTrue();
+    }
 }
 
 void Player::movePlayer()
 {
     objPos currentPos;
     getPlayerHeadPos(currentPos);
+    objPos foodPos;
+    mainGameMechsRef->getFoodPos(foodPos);
+
     // PPA3 Finite State Machine logic
     int boardX = mainGameMechsRef->getBoardSizeX();
     int boardY = mainGameMechsRef->getBoardSizeY();
+
     switch (myDir)
     {
     case STOP:
@@ -85,9 +100,9 @@ void Player::movePlayer()
 
         if (currentPos.y - 1 == 0)
         {
-
             if (playerPos->isElement({currentPos.x, boardY - 2, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -99,6 +114,7 @@ void Player::movePlayer()
         {
             if (playerPos->isElement({currentPos.x, currentPos.y - 1, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -108,13 +124,18 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case DOWN:
         if (currentPos.y + 1 == boardY - 1)
         {
             if (playerPos->isElement({currentPos.x, 1, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -126,6 +147,7 @@ void Player::movePlayer()
         {
             if (playerPos->isElement({currentPos.x, currentPos.y + 1, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -135,13 +157,18 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case LEFT:
         if (currentPos.x - 1 == 0)
         {
             if (playerPos->isElement({boardX - 2, currentPos.y, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -153,6 +180,7 @@ void Player::movePlayer()
         {
             if (playerPos->isElement({currentPos.x - 1, currentPos.y, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -162,13 +190,17 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case RIGHT:
         if (currentPos.x + 1 == boardX - 1)
         {
             if (playerPos->isElement({1, currentPos.y, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -180,6 +212,7 @@ void Player::movePlayer()
         {
             if (playerPos->isElement({currentPos.x + 1, currentPos.y, '@'}))
             {
+                mainGameMechsRef->setWinTrue();
                 mainGameMechsRef->setExitTrue();
             }
             else
@@ -189,7 +222,18 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
+    }
+
+    if (playerPos->isElement(foodPos))
+    {
+        objPosArrayList playerPositions;
+        getPlayerPos(playerPositions);
+        mainGameMechsRef->addToScore(1);
+        mainGameMechsRef->generateFood(playerPositions);
     }
 }
