@@ -8,6 +8,7 @@ using namespace std;
 
 GameMechs Board1;
 Player player = Player(&Board1);
+string debugMessages = "";
 
 void Initialize(void);
 void GetInput(void);
@@ -42,8 +43,9 @@ void Initialize(void)
     Board1 = GameMechs(BOARD_WIDTH, BOARD_HEIGHT);
 
     objPosArrayList playerPositions;
-    player.getPlayerPos(&playerPositions);
+    player.getPlayerPos(playerPositions);
     Board1.generateFood(&playerPositions);
+    debugMessages += playerPositions.toString();
 }
 
 void GetInput(void)
@@ -109,13 +111,13 @@ void DrawScreen(void)
     cout << total;
 
     objPos playerHeadPos;
-    objPosArrayList playerPos;
+    objPosArrayList playerPositions;
     player.getPlayerHeadPos(playerHeadPos);
-    player.getPlayerPos(&playerPos);
+    player.getPlayerPos(playerPositions);
 
-    string debug = "";
+    string debug = debugMessages + "\n";
     // debug += "Player Head \t  " + playerHeadPos.toString();
-    debug += playerPos.toString();
+    debug += playerPositions.toString();
     debug += "Player Direction: " + to_string(player.getDirection()) + "\n";
     debug += "Food Position\t  " + foodPos.toString();
     debug += "Score\t\t  " + to_string(Board1.getScore()) + "\n";
