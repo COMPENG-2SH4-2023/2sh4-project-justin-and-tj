@@ -78,9 +78,13 @@ void Player::movePlayer()
 {
     objPos currentPos;
     getPlayerHeadPos(currentPos);
+    objPos foodPos;
+    mainGameMechsRef->getFoodPos(foodPos);
+
     // PPA3 Finite State Machine logic
     int boardX = mainGameMechsRef->getBoardSizeX();
     int boardY = mainGameMechsRef->getBoardSizeY();
+
     switch (myDir)
     {
     case STOP:
@@ -89,7 +93,6 @@ void Player::movePlayer()
 
         if (currentPos.y - 1 == 0)
         {
-
             if (playerPos->isElement({currentPos.x, boardY - 2, '@'}))
             {
                 mainGameMechsRef->setExitTrue();
@@ -112,7 +115,11 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case DOWN:
         if (currentPos.y + 1 == boardY - 1)
@@ -139,7 +146,11 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case LEFT:
         if (currentPos.x - 1 == 0)
@@ -166,7 +177,10 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
     case RIGHT:
         if (currentPos.x + 1 == boardX - 1)
@@ -193,7 +207,16 @@ void Player::movePlayer()
         }
 
         playerPos->insertHead(currentPos);
-        playerPos->removeTail();
+        if (!playerPos->isElement(foodPos))
+        {
+            playerPos->removeTail();
+        }
         break;
+    }
+
+    if (playerPos->isElement(foodPos))
+    {
+        mainGameMechsRef->addToScore(1);
+        mainGameMechsRef->generateFood(playerPos);
     }
 }

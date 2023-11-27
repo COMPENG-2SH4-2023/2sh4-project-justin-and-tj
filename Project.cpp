@@ -8,7 +8,6 @@ using namespace std;
 
 GameMechs Board1;
 Player player = Player(&Board1);
-objPosArrayList foodPositions;
 
 void Initialize(void);
 void GetInput(void);
@@ -38,11 +37,13 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
+    srand(time(NULL));
+
     Board1 = GameMechs(BOARD_WIDTH, BOARD_HEIGHT);
 
     objPosArrayList playerPositions;
     player.getPlayerPos(&playerPositions);
-    Board1.generateFood(&foodPositions, playerPositions, 1);
+    Board1.generateFood(&playerPositions);
 }
 
 void GetInput(void)
@@ -73,6 +74,9 @@ void DrawScreen(void)
     MacUILib_clearScreen();
 
     string total;
+
+    objPos foodPos;
+    Board1.getFoodPos(foodPos);
     for (int j = 0; j < Board1.getBoardSizeY(); j++)
     {
         for (int i = 0; i < Board1.getBoardSizeX() + 1; i++)
@@ -87,7 +91,7 @@ void DrawScreen(void)
                 player.getPlayerHeadPos(currentPos);
                 total += currentPos.symbol;
             }
-            else if (foodPositions.isElement({i, j, FOOD_CHAR}))
+            else if (foodPos.isPosEqual(i, j))
             {
                 total += FOOD_CHAR;
             }
@@ -105,15 +109,20 @@ void DrawScreen(void)
     cout << total;
 
     objPos playerHeadPos;
+    objPosArrayList playerPos;
     player.getPlayerHeadPos(playerHeadPos);
+    player.getPlayerPos(&playerPos);
 
     string debug = "";
-    debug += "Player Head, x: " + to_string(playerHeadPos.x) + " y: " + to_string(playerHeadPos.y) + " symbol: " + playerHeadPos.symbol + "\n";
-    debug += "Player Direction:" + to_string(player.getDirection()) + "\n";
-    for (int i = 0; i < foodPositions.getSize(); i++)
+    debug += "Player Head \t  " + playerHeadPos.toString();
+    for (int i = 0; i < playerPos.getSize(); i++)
     {
-        debug += "FOOD #" + to_string(i + 1) + " \n";
+        debug += "Player\t  " + playerHeadPos.toString();
     }
+    debug += "Player Direction: " + to_string(player.getDirection()) + "\n";
+    debug += "Player Length: " + to_string(playerPos.getSize()) + "\n";
+    debug += "Food Position\t  " + foodPos.toString();
+    debug += "Score\t\t  " + to_string(Board1.getScore()) + "\n";
     debug += "Input: ";
 
     cout << debug << Board1.getInput() << endl;
