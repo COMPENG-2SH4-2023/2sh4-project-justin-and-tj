@@ -35,6 +35,9 @@ public:
     bool getExitFlagStatus();
     void setExitTrue();
 
+    bool getWinFlagStatus();
+    void setWinTrue();
+
     char getInput();
     void setInput(char this_input);
     void clearInput();
@@ -48,7 +51,7 @@ public:
     void addToScore(int n);
     int getScore();
 
-    void generateFood(objPosArrayList *PlayerPositions);
+    void generateFood(objPosArrayList &PlayerPositions);
 };
 
 #endif

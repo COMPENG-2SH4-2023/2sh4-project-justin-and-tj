@@ -119,7 +119,7 @@ std::string objPosArrayList::toString()
     output += "Array Length: " + std::to_string(getSize()) + "\n";
     for (int i = 0; i < getSize(); i++)
     {
-        output += aList[i].toString() + "\n";
+        output += aList[i].toString();
     }
     return output;
 }

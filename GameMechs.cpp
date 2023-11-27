@@ -40,6 +40,11 @@ char GameMechs::getInput()
     return input;
 }
 
+bool GameMechs::getWinFlagStatus()
+{
+    return winFlag;
+}
+
 int GameMechs::getBoardSizeX()
 {
     return boardSizeX;
@@ -53,6 +58,11 @@ int GameMechs::getBoardSizeY()
 void GameMechs::setExitTrue()
 {
     exitFlag = true;
+}
+
+void GameMechs::setWinTrue()
+{
+    winFlag = true;
 }
 
 void GameMechs::setInput(char this_input)
@@ -85,9 +95,9 @@ int GameMechs::getScore()
     return score;
 }
 
-void GameMechs::generateFood(objPosArrayList *PlayerPositions)
+void GameMechs::generateFood(objPosArrayList &PlayerPositions)
 {
-    int CheckArray[BOARD_WIDTH][BOARD_HEIGHT];
+    int CheckArray[BOARD_WIDTH][BOARD_HEIGHT] = {0};
     for (int j = 0; j < getBoardSizeY(); j++)
     {
         for (int i = 0; i < getBoardSizeX(); i++)
@@ -100,10 +110,10 @@ void GameMechs::generateFood(objPosArrayList *PlayerPositions)
         }
     }
 
-    for (int w = 0; w < PlayerPositions->getSize(); w++)
+    for (int w = 0; w < PlayerPositions.getSize(); w++)
     {
         objPos playerPos;
-        PlayerPositions->getElement(playerPos, w);
+        PlayerPositions.getElement(playerPos, w);
         CheckArray[playerPos.x][playerPos.y]++;
     }
 
