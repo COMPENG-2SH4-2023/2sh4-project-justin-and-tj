@@ -53,7 +53,7 @@ void GetInput(void)
             Board1.setInput(cmd);
         }
         else{
-            Board1.setInput(0)
+            Board1.setInput(0);
         }
     }
 }
