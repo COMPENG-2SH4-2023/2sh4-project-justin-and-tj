@@ -49,7 +49,7 @@ void objPosArrayList::insertHead(objPos thisPos)
         increaseSizeArray();
     }
 
-    for (int i = 0; i < sizeList; i++)
+    for (int i = sizeList - 1; i >= 0; i--)
     {
         aList[i + 1] = aList[i];
     }
