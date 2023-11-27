@@ -8,7 +8,7 @@ using namespace std;
 #define DELAY_CONST 100000
 
 bool exitFlag;
-GameMechs gameMechanics;
+GameMechs Board1;
 
 void Initialize(void);
 void GetInput(void);
@@ -38,7 +38,7 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    gameMechanics = GameMechanics(30, 30);
+    Board1 = GameMechs(20, 10);
     exitFlag = false;
 }
 
@@ -52,6 +52,32 @@ void RunLogic(void)
 
 void DrawScreen(void)
 {
+    string total;
+
+    for (int j = 0; j < Board1.getBoardSizeY(); j++)
+    {
+        for (int i = 0; i < Board1.getBoardSizeX() + 2; i++)
+        {
+            if ( j == 0 || j == Board1.getBoardSizeY() - 1)
+            {
+                total += "#";
+            }
+            else if (i == 0 || i == Board1.getBoardSizeX() - 1)
+            {
+                total += "#";
+            }
+            else if (i == Board1.getBoardSizeX() + 1)
+            {
+                total += "\n";
+            }
+            else
+            {
+                total += " ";
+            }
+        }
+        
+    }
+    cout << total << endl;
     MacUILib_clearScreen();
 }
 
