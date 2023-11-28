@@ -1,3 +1,4 @@
+// Header file to make definitions globally accessible
 #ifndef DEFINITIONS_H
 #define DEFINITIONS_H
 
