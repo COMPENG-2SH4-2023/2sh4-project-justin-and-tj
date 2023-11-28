@@ -51,6 +51,11 @@ bool objPos::isPosEqual(const objPos *refPos)
     return (refPos->x == x && refPos->y == y);
 }
 
+bool objPos::isPosEqual(int x1, int y1)
+{
+    return (x1 == x && y1 == y);
+}
+
 char objPos::getSymbolIfPosEqual(const objPos *refPos)
 {
     if (isPosEqual(refPos))
@@ -63,6 +68,6 @@ std::string objPos::toString()
 {
     std::string output = "x: " + std::to_string(x) + "\t" +
                          "y : " + std::to_string(y) + "\t" +
-                         "symbol : " + symbol;
+                         "symbol : " + symbol + "\n";
     return output;
 }
