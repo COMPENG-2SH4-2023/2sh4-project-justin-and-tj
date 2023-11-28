@@ -7,9 +7,9 @@
 
 objPosArrayList::objPosArrayList()
 {
-    aList = new objPos[ARRAY_MAX_CAP];
+    aList = new objPos[ARRAY_UNIT_SIZE];
     sizeList = 0;
-    sizeArray = ARRAY_MAX_CAP;
+    sizeArray = ARRAY_UNIT_SIZE;
 }
 
 objPosArrayList::~objPosArrayList()
